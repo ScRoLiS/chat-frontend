@@ -1,2 +1,1 @@
-import { useAuth } from './userAuth';
-export { useAuth }
+export { useAuth } from './useAuth'

@@ -5,6 +5,7 @@ import { LoginPage } from '../LoginPage/LoginPage'
 
 export const Page = () => {
     const isAuth = useAuth()
+    
     if (isAuth) return <ChatPage />
 
     return <LoginPage />
