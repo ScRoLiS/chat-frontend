@@ -1,0 +1,36 @@
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    outline: none;
+    padding: 10px;
+    border-radius: 5px;
+    min-width: 80px;
+    font-size: 16px;
+    line-height: 16px;
+    color: #fff;
+    background-color: #fff;
+    
+    &:hover {
+        cursor: pointer;
+    }
+
+    &--save {
+        background-color: #4ADE80;
+        &:hover {
+            background-color: #86EFAC;
+        }
+    }
+
+    &--close {
+        background-color: #F87171;
+        &:hover {
+            background-color: #FCA5A5;
+        }
+    }
+
+    &:disabled {
+        background-color: rgb(163, 163, 163);
+    }
+}
