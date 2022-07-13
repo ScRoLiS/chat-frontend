@@ -6,7 +6,7 @@ export const createConnectMessage = (user: IUser): IMessage => {
         user,
         message: {
             type: 'NOTIFY',
-            body: `${user.name} connected to chat`
+            body: `${user.name} joined the chat`
         }
     }
 
@@ -18,7 +18,7 @@ export const createDisconnectMessage = (user: IUser): IMessage => {
         user,
         message: {
             type: 'NOTIFY',
-            body: `${user.name} disconnected from chat`
+            body: `${user.name} left the chat`
         }
     }
 
