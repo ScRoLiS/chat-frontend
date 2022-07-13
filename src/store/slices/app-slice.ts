@@ -10,7 +10,8 @@ const initialState: AppState = {
     user: {
         id: '',
         name: '',
-        avatar: -1
+        avatar: -1,
+        muted: false
     }
 }
 
@@ -19,7 +20,7 @@ const appSlice = createSlice({
     initialState,
     reducers: {
         updateUser(state, action: PayloadAction<IUser>) {
-            state.user = action.payload
+            state.user = { ...action.payload }
         }
     }
 })

@@ -1,0 +1,54 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+.side-panel {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    width: 300px;
+    height: 100%;
+    background-color: $primary;
+    padding: 10px;
+    gap: 10px;
+
+    &__header {
+        display: flex;
+    }
+
+    &__logo {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        svg {
+            position: relative;
+            top: 2px;
+            width: 25px;
+            height: 25px;
+            color: #fff;
+        }
+        span {
+            font-size: 20px;
+            line-height: 20px;
+            color: #fff;
+        }
+    }
+
+    &__buttons {
+        display: flex;
+        margin-left: auto;
+        align-items: center;
+    }
+
+    &__user-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 10px;
+        border-radius: 5px;
+        flex-grow: 1;
+        background-color: $user-list;
+
+        @include inner-shadow;
+    }
+}

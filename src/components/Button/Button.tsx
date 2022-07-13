@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import './Button.scss'
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-    variant: 'save' | 'close'
+    variant: 'large' | 'small'
 }
 
 export const Button: React.FC<ButtonProps> = ({ className, variant, children, ...props }) => {

@@ -1,0 +1,39 @@
+@import '../../styles/mixins.scss';
+
+.chat-panel {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 10px 10px 10px 0;
+    gap: 10px;
+
+    &__container {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        padding: 10px;
+        background-color: #fff;
+        border-radius: 5px;
+        background-image: url('../../assets/bg-pattern.png');
+
+        @include inner-shadow;
+    }
+
+    &__messages {
+        display: flex;
+        flex-direction: column;
+        margin-top: auto;
+
+        * {
+            margin-bottom: 15px;
+
+            &:nth-last-child(2) {
+                margin-bottom: 0;
+            }
+
+            &:last-child {
+                margin: 0;
+            }
+        }
+    }
+}

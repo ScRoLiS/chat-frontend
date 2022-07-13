@@ -1,41 +1,58 @@
 import React from 'react';
-import { socket, SocketContext } from '../contexts/socket-context';
-import { LoadingPage, Page } from '../pages';
-import { useAppDispatch } from '../store/hooks';
+import { Event } from '../types/events';
+import { IUser } from '../types/user';
+import { useAuth } from '../hooks';
 import { addMessage } from '../store/slices/messages-slice';
 import { updateUsers } from '../store/slices/users-slice';
-import { Event } from '../types/events';
-import { IMessage, Message } from '../types/messages';
-import { IUser } from '../types/user';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { LoadingPage, Page } from '../pages';
+import { IMessage } from '../types/messages';
+import { socket, SocketContext } from '../contexts/socket-context';
+import { createConnectMessage, createDisconnectMessage, createUpdateMessage } from '../utils/message-creators';
+import { selectUser, updateUser } from '../store/slices/app-slice';
 import './App.scss';
 
 function App() {
+  const me = useAppSelector(selectUser)
+  const isAuth = useAuth()
   const dispatch = useAppDispatch()
   const [connected, setConnected] = React.useState(false)
 
   React.useEffect(() => {
     socket.on('connect', () => {
       setConnected(true)
-    })
 
-    socket.on(Event.USER_CONNECT, (users: IUser[]) => {
-      dispatch(updateUsers(users))
-    })
-
-    socket.on(Event.USER_DISCONNECT, (users: IUser[]) => {
-      dispatch(updateUsers(users))
-    })
-
-    socket.on(Event.USER_UPDATE, (users: IUser[]) => {
-      dispatch(updateUsers(users))
-    })
-
-    socket.on(Event.USER_MESSAGE, (user: IUser, message: Message) => {
-      const msg: IMessage = {
-        user,
-        message
+      if (isAuth) {
+        console.log(socket.id);
+        const user: IUser = { ...me, id: socket.id }
+        dispatch(updateUser(user))
+        socket.emit(Event.USER_CONNECT, user)
       }
-      dispatch(addMessage(msg))
+
+    })
+
+    socket.on(Event.USER_CONNECT, (user: IUser, users: IUser[]) => {
+      const message: IMessage = createConnectMessage(user)
+      dispatch(updateUsers(users))
+      dispatch(addMessage(message))
+    })
+
+    socket.on(Event.USER_DISCONNECT, (user: IUser, users: IUser[]) => {
+      const message: IMessage = createDisconnectMessage(user)
+      dispatch(updateUsers(users))
+      dispatch(addMessage(message))
+    })
+
+    socket.on(Event.USER_UPDATE, (oldUser: IUser, newUser: IUser, users: IUser[]) => {
+      const messages: IMessage[] = createUpdateMessage(oldUser, newUser)
+      messages.forEach((message) => {
+        dispatch(addMessage(message))
+      })
+      dispatch(updateUsers(users))
+    })
+
+    socket.on(Event.USER_MESSAGE, (message: IMessage) => {
+      dispatch(addMessage(message))
     })
 
     socket.on('disconnect', () => {

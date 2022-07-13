@@ -1,0 +1,13 @@
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0%;
+    padding: 20px;
+    background-color: #00000075;
+    backdrop-filter: blur(3px);
+}

@@ -15,7 +15,22 @@ const usersSlice = createSlice({
     initialState,
     reducers: {
         updateUsers(state, action: PayloadAction<IUser[]>) {
-            state.users = action.payload
+            const users = action.payload.map((item) => {
+                const newUser = { ...item }
+                state.users.forEach((oldUser) => {
+                    if (oldUser.id === newUser.id)
+                        newUser.muted = oldUser.muted
+                })
+                return newUser
+            })
+
+            state.users = users
+        },
+        muteUser(state, action: PayloadAction<string>) {
+            state.users.forEach((user) => {
+                if (user.id === action.payload)
+                    user.muted = !user.muted
+            })
         }
     }
 })
@@ -23,4 +38,4 @@ const usersSlice = createSlice({
 export const selectUsers = (state: RootState) => state.users.users
 
 export const usersReducer = usersSlice.reducer
-export const { updateUsers } = usersSlice.actions
+export const { updateUsers, muteUser } = usersSlice.actions

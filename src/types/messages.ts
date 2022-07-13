@@ -1,8 +1,9 @@
 import { IUser } from './user';
 
 export interface Message {
-    type: 'MESSAGE' | 'DISCONNECT' | 'CONNECT' | 'UPDATE';
+    type: 'MESSAGE' | 'NOTIFY';
     body?: string;
+    time?: string;
 }
 
 export interface IMessage {
