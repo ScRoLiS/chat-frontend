@@ -1,0 +1,29 @@
+@import '../../styles/mixins.scss';
+
+.scroll-down {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 70px;
+    right: 20px;
+    width: 45px;
+    height: 45px;
+    padding: 5px;
+    border-radius: 50%;
+    outline: none;
+    border: none;
+    background-color: #fff;
+    cursor: pointer;
+
+    @include outer-shadow;
+
+    svg {
+        width: 70%;
+        height: 70%;
+    }
+
+    &:hover {
+        background-color: #ecf6ff;
+    }
+}

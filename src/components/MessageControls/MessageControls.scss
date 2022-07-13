@@ -1,0 +1,10 @@
+.message-controls {
+    display: flex;
+
+    button:first-child {
+        svg {
+            position: relative;
+            top: -1px;
+        }
+    }
+}

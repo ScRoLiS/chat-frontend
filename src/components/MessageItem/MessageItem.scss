@@ -4,7 +4,19 @@
     display: flex;
     gap: 10px;
 
-    svg {
+    margin-bottom: 15px;
+
+    &:nth-last-child(2) {
+        margin-bottom: 0;
+    }
+
+    &:last-child {
+        margin: 0;
+    }
+
+    &__avatar {
+        position: sticky;
+        bottom: 0;
         flex-shrink: 0;
         width: 40px;
         height: 40px;
@@ -14,7 +26,7 @@
     &__body {
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 5px;
         padding: 15px;
         max-width: 100%;
         min-width: 300px;
@@ -30,6 +42,25 @@
         font-weight: bold;
     }
 
+    &__text {
+        padding: 5px 0;
+        margin: 0;
+    }
+
+    &__controls {
+        display: flex;
+        align-items: center;
+    }
+
+    &__time {
+        position: relative;
+        top: 1px;
+        font-size: 14px;
+        line-height: 14px;
+        margin-left: auto;
+        color: #D4D4D8;
+    }
+
     &--me {
         flex-direction: row-reverse;
     }
@@ -42,7 +73,7 @@
         border-radius: 5px;
         max-width: 400px;
         text-align: center;
-        
+
         @include outer-shadow;
     }
 }

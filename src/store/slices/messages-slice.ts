@@ -16,6 +16,9 @@ const messagesSlice = createSlice({
     reducers: {
         addMessage(state, action: PayloadAction<IMessage>) {
             state.messages.push(action.payload)
+        },
+        removeMessage(state, action: PayloadAction<number>) {
+            state.messages = state.messages.filter((item, index) => index !== action.payload)
         }
     }
 })
@@ -23,4 +26,4 @@ const messagesSlice = createSlice({
 export const selectMessages = (state: RootState) => state.messages.messages
 
 export const messagesReducer = messagesSlice.reducer
-export const { addMessage } = messagesSlice.actions
+export const { addMessage, removeMessage } = messagesSlice.actions

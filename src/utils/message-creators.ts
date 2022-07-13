@@ -28,7 +28,10 @@ export const createDisconnectMessage = (user: IUser): IMessage => {
 export const createMessage = (user: IUser, msg: Message): IMessage => {
     const message: IMessage = {
         user,
-        message: msg
+        message: {
+            ...msg,
+            time: new Date().toLocaleTimeString().substring(0, 5)
+        },
     }
 
     return message
