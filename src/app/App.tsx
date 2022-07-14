@@ -1,33 +1,23 @@
 import React from 'react';
+import { store } from '../store';
 import { Event } from '../types/events';
 import { IUser } from '../types/user';
-import { useAuth } from '../hooks';
+import { IMessage } from '../types/messages';
 import { addMessage } from '../store/slices/messages-slice';
 import { updateUsers } from '../store/slices/users-slice';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { useAppDispatch } from '../store/hooks';
 import { LoadingPage, Page } from '../pages';
-import { IMessage } from '../types/messages';
 import { socket, SocketContext } from '../contexts/socket-context';
 import { createConnectMessage, createDisconnectMessage, createUpdateMessage } from '../utils/message-creators';
-import { selectUser, updateUser } from '../store/slices/app-slice';
 import './App.scss';
 
 function App() {
-  const me = useAppSelector(selectUser)
-  const isAuth = useAuth()
   const dispatch = useAppDispatch()
   const [connected, setConnected] = React.useState(false)
 
   React.useEffect(() => {
     socket.on('connect', () => {
       setConnected(true)
-
-      if (isAuth) {
-        console.log(socket.id);
-        const user: IUser = { ...me, id: socket.id }
-        dispatch(updateUser(user))
-        socket.emit(Event.USER_CONNECT, user)
-      }
 
     })
 
@@ -52,7 +42,12 @@ function App() {
     })
 
     socket.on(Event.USER_MESSAGE, (message: IMessage) => {
-      dispatch(addMessage(message))
+      const users = store.getState().users.users
+      const user = users.find((item) => {
+        return item.id === message.user.id
+      })
+      if (user && !user.muted)
+        dispatch(addMessage(message))
     })
 
     socket.on('disconnect', () => {
