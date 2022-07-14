@@ -1,8 +1,13 @@
 import { IMessage, Message } from './../types/messages';
 import { IUser } from './../types/user';
 
+function getRandomId(): number {
+    return Math.round(Math.random() * 1000000000000)
+}
+
 export const createConnectMessage = (user: IUser): IMessage => {
     const message: IMessage = {
+        id: getRandomId(),
         user,
         message: {
             type: 'NOTIFY',
@@ -15,6 +20,7 @@ export const createConnectMessage = (user: IUser): IMessage => {
 
 export const createDisconnectMessage = (user: IUser): IMessage => {
     const message: IMessage = {
+        id: getRandomId(),
         user,
         message: {
             type: 'NOTIFY',
@@ -27,6 +33,7 @@ export const createDisconnectMessage = (user: IUser): IMessage => {
 
 export const createMessage = (user: IUser, msg: Message): IMessage => {
     const message: IMessage = {
+        id: getRandomId(),
         user,
         message: {
             ...msg,
@@ -42,6 +49,7 @@ export const createUpdateMessage = (oldUser: IUser, newUser: IUser): IMessage[] 
 
     if (oldUser.name !== newUser.name) {
         const nameMessage: IMessage = {
+            id: getRandomId(),
             user: newUser,
             message: {
                 type: 'NOTIFY',
@@ -54,6 +62,7 @@ export const createUpdateMessage = (oldUser: IUser, newUser: IUser): IMessage[] 
 
     if (oldUser.avatar !== newUser.avatar) {
         const avatarMessage: IMessage = {
+            id: getRandomId(),
             user: newUser,
             message: {
                 type: 'NOTIFY',

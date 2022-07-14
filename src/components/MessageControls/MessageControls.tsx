@@ -5,13 +5,14 @@ import { AiOutlineDelete } from 'react-icons/ai'
 import './MessageControls.scss'
 
 interface MessageControlsProps {
-    onDelete?(): void
+    onDelete?(): void;
+    onReply?(): void;
 }
 
-export const MessageControls: React.FC<MessageControlsProps> = ({ onDelete }) => {
+export const MessageControls: React.FC<MessageControlsProps> = ({ onDelete, onReply }) => {
     return (
         <div className="message-controls">
-            <IconButton variant="message"><BsReply /></IconButton>
+            <IconButton onClick={onReply} variant="message"><BsReply /></IconButton>
             <IconButton onClick={onDelete} variant="message" className="icon-button--red"><AiOutlineDelete /></IconButton>
         </div>
     )

@@ -18,7 +18,7 @@ const messagesSlice = createSlice({
             state.messages.push(action.payload)
         },
         removeMessage(state, action: PayloadAction<number>) {
-            state.messages = state.messages.filter((item, index) => index !== action.payload)
+            state.messages = state.messages.filter((item) => item.id !== action.payload)
         }
     }
 })

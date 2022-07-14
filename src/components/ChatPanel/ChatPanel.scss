@@ -5,7 +5,15 @@
     flex-direction: column;
     flex-grow: 1;
     padding: 10px 10px 10px 0;
+    width: 100%;
     gap: 10px;
+
+    &__scrollable {
+        overflow: hidden;
+        position: relative;
+        flex-grow: 1;
+        border-radius: 5px;
+    }
 
     &__container {
         position: relative;

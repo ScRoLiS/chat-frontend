@@ -1,0 +1,51 @@
+.message-reply {
+    display: flex;
+    justify-content: flex-start;
+    padding: 10px;
+    border-radius: 5px 5px 0 0;
+    background-color: #fff;
+    overflow: hidden;
+
+    &__message {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        padding-inline: 5px;
+        font-size: 14px;
+        line-height: 14px;
+        border-left: 2px solid #d1d1d1;
+
+        div {
+            overflow: hidden;
+            width: 100%;
+        }
+
+        span {
+            font-weight: bold;
+        }
+
+        p {
+            overflow: hidden;
+            word-break: break-all;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            margin: 0;
+        }
+    }
+
+    button {
+        flex-shrink: 0;
+        margin-left: auto;
+    }
+
+    &--message {
+        padding: 5px 0 5px 0;
+        color: #d1d1d1;
+    }
+
+    &:hover {
+        cursor: pointer;
+        background-color: #f7f7f7;
+    }
+}

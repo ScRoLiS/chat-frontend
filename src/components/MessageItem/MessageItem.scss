@@ -28,8 +28,8 @@
         flex-direction: column;
         gap: 5px;
         padding: 15px;
-        max-width: 100%;
-        min-width: 300px;
+        max-width: 800px;
+        // min-width: 300px;
         word-break: break-all;
         background-color: #fff;
         border-radius: 5px;
@@ -50,6 +50,7 @@
     &__controls {
         display: flex;
         align-items: center;
+        gap: 10px;
     }
 
     &__time {
@@ -75,5 +76,11 @@
         text-align: center;
 
         @include outer-shadow;
+    }
+
+    &--to-me {
+        .message-item__body {
+            @include color-shadow;
+        }
     }
 }

@@ -9,32 +9,34 @@ import { ScrollDown } from '../ScrollDown/ScrollDown'
 
 export const ChatPanel = () => {
     const messages = useAppSelector(selectMessages)
-    const messagesRef = React.useRef<HTMLDivElement>(null)
     const { inView, ref } = useInView()
 
     const scrollDown = () => {
-        const scrollHeight = messagesRef.current?.scrollHeight
-        if (scrollHeight) {
-            messagesRef.current.scrollTo(0, scrollHeight)
-        }
+        const allMassages = document.querySelectorAll('.message-item')
+        const element = allMassages[allMassages.length - 1]
+        element?.scrollIntoView({
+            behavior: 'smooth'
+        })
     }
 
     React.useEffect(() => {
         if (inView) {
             scrollDown()
         }
-    }, [messages, inView])
+    }, [messages])
 
     return (
         <div className="chat-panel">
-            <div ref={messagesRef} className="chat-panel__container scrollbar">
-                <div className="chat-panel__messages">
-                    {messages.map((message, index) => {
-                        return (
-                            <MessageItem message={message} index={index} key={index} />
-                        )
-                    })}
-                    <div className="chat-panel__scroller" ref={ref} />
+            <div className="chat-panel__scrollable">
+                <div className="chat-panel__container scrollbar">
+                    <div className="chat-panel__messages">
+                        {messages.map((message) => {
+                            return (
+                                <MessageItem message={message} key={message.id} />
+                            )
+                        })}
+                        <div className="chat-panel__scroller" ref={ref} />
+                    </div>
                 </div>
                 {!inView && <ScrollDown onClick={scrollDown} />}
             </div>
