@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { MouseEvent } from 'react'
 import { MdClose } from 'react-icons/md'
 import { IMessage } from '../../types/messages'
 import { IconButton } from '../IconButton/IconButton';
@@ -15,7 +15,8 @@ interface MessageReplyProps {
 export const MessageReply: React.FC<MessageReplyProps> = ({ message, variant = 'MESSAGE' }) => {
     const dispatch = useAppDispatch()
 
-    const removeReply = () => {
+    const removeReply = (e: MouseEvent) => {
+        e.stopPropagation()
         dispatch(deleteReply())
     }
 
@@ -27,15 +28,19 @@ export const MessageReply: React.FC<MessageReplyProps> = ({ message, variant = '
                 behavior: 'smooth'
             })
         }
-
     }
 
     return (
-        <div className={clsx('message-reply', {
+        <div onClick={scrollToMessage} className={clsx('message-reply', {
             'message-reply--message': variant === 'MESSAGE'
         })}>
-            <div className="message-reply__message" onClick={scrollToMessage}>
-                {message.message.body}
+            <div className="message-reply__message">
+                <div className="message-reply__name">
+                    {message.user.name}
+                </div>
+                <div className="message-reply__text">
+                    {message.message.body}
+                </div>
             </div>
             {variant === 'INPUT' && (
                 <IconButton variant="message" onClick={removeReply}><MdClose /></IconButton>
