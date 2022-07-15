@@ -1,3 +1,9 @@
+@import '../../styles/variables.scss';
+
 .chat-page {
     display: flex;
+
+    @media screen and (max-width: $mobile) {
+        flex-direction: column;
+    }
 }

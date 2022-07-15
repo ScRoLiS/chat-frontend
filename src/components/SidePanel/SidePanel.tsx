@@ -1,6 +1,8 @@
 import React from 'react'
 import { BsChatLeftText } from 'react-icons/bs'
+import { VscMenu } from 'react-icons/vsc'
 import { FiSettings } from 'react-icons/fi'
+import { CgClose } from 'react-icons/cg'
 import { SocketContext } from '../../contexts/socket-context'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { selectUser, updateUser } from '../../store/slices/app-slice'
@@ -12,6 +14,7 @@ import { Modal } from '../Modal/Modal'
 import { Settings } from '../Settings/Settings'
 import { UserItem } from '../UserItem/UserItem'
 import './SidePanel.scss'
+import clsx from 'clsx'
 
 export const SidePanel = () => {
     const socket = React.useContext(SocketContext)
@@ -19,6 +22,7 @@ export const SidePanel = () => {
     const me = useAppSelector(selectUser)
     const sortedUsers = React.useMemo(() => sort(users), [users])
     const [settings, setSettings] = React.useState(false)
+    const [menuOpened, setMenuOpened] = React.useState(false)
     const dispatch = useAppDispatch()
 
     function sort(users: IUser[]) {
@@ -43,7 +47,10 @@ export const SidePanel = () => {
     }
 
     return (
-        <div className="side-panel">
+        <div className={clsx('side-panel', {
+            'side-panel--opened': menuOpened
+        })}
+        >
             <div className="side-panel__header">
                 <div className="side-panel__logo">
                     <BsChatLeftText />
@@ -51,6 +58,9 @@ export const SidePanel = () => {
                 </div>
                 <div className="side-panel__buttons">
                     <IconButton onClick={() => { setSettings(state => !state) }}><FiSettings /></IconButton>
+                    <IconButton onClick={() => { setMenuOpened(state => !state) }} className="side-panel__menu-button">
+                        {menuOpened ? <CgClose /> : <VscMenu />}
+                    </IconButton>
                 </div>
             </div>
             <div className="side-panel__user-list scrollbar">

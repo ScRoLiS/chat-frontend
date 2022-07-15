@@ -27,6 +27,7 @@
             height: 25px;
             color: #fff;
         }
+
         span {
             font-size: 20px;
             line-height: 20px;
@@ -38,6 +39,7 @@
         display: flex;
         margin-left: auto;
         align-items: center;
+        gap: 5px;
     }
 
     &__user-list {
@@ -50,5 +52,35 @@
         background-color: $user-list;
 
         @include inner-shadow;
+    }
+
+    &__menu-button {
+        display: none;
+    }
+
+    @media screen and (max-width: $mobile) {
+        width: 100%;
+        height: auto;
+
+        &__user-list {
+            display: none;
+        }
+
+        &__menu-button {
+            display: block;
+        }
+
+        &--opened {
+            z-index: 10;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+
+            .side-panel {
+                &__user-list {
+                    display: flex;
+                }
+            }
+        }
     }
 }

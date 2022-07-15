@@ -23,7 +23,6 @@ export const MessageReply: React.FC<MessageReplyProps> = ({ message, variant = '
     const scrollToMessage = () => {
         if (message.id) {
             const element = document.getElementById(message.id.toString())
-            console.log(element);
             element?.scrollIntoView({
                 behavior: 'smooth'
             })
