@@ -2,25 +2,30 @@ import React, { FormEvent, KeyboardEvent } from 'react'
 import { Input } from '../Input/Input'
 import { Event } from '../../types/events'
 import { MdSend } from 'react-icons/md'
+import { BsEmojiSmile } from 'react-icons/bs'
 import { IconButton } from '../IconButton/IconButton'
-import { selectUser } from '../../store/slices/app-slice'
+import { selectEmojiPanel, selectUser, toggleEmojiPanel } from '../../store/slices/app-slice'
 import { MessageReply } from '../MessageReply/MessageReply'
 import { SocketContext } from '../../contexts/socket-context'
 import { createMessage } from '../../utils/message-creators'
-import { deleteReply, selectReply } from '../../store/slices/message-input-slice'
+import { clearMessage, deleteReply, selectMessage, selectReply, updateMessage } from '../../store/slices/message-input-slice'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import clsx from 'clsx'
 import './MessageInput.scss'
+import { useMobile } from '../../hooks'
+import { EmojiPanel } from '../EmojiPanel/EmojiPanel'
 
 export const MessageInput = () => {
+    const dispatch = useAppDispatch()
+    const isMobile = useMobile();
+    const emojiPanel = useAppSelector(selectEmojiPanel)
     const user = useAppSelector(selectUser)
     const reply = useAppSelector(selectReply)
-    const dispatch = useAppDispatch()
+    const message = useAppSelector(selectMessage)
     const socket = React.useContext(SocketContext)
-    const [message, setMessage] = React.useState('')
 
     const handleMessage = (e: FormEvent<HTMLInputElement>) => {
-        setMessage(e.currentTarget.value.substring(0, 1000).trimStart())
+        dispatch(updateMessage(e.currentTarget.value.substring(0, 1000).trimStart()))
     }
 
     const handleKeyboard = (e: KeyboardEvent) => {
@@ -36,8 +41,12 @@ export const MessageInput = () => {
         })
 
         socket.emit(Event.USER_MESSAGE, msg)
-        setMessage('')
+        dispatch(clearMessage())
         dispatch(deleteReply())
+    }
+
+    const handleEmojiClick = () => {
+
     }
 
     return (
@@ -46,15 +55,22 @@ export const MessageInput = () => {
                 <MessageReply message={reply} variant="INPUT" />
             )}
             <div className="message-input__container">
-                <Input
-                    value={message}
-                    onKeyDown={handleKeyboard}
-                    onChange={handleMessage}
-                    className={clsx('message-input__input', {
-                        'message-input__input--reply': reply
-                    })}
-                    placeholder="Your message is..."
-                />
+                <div className="message-input__input-wrapper">
+                    <Input
+                        value={message}
+                        onKeyDown={handleKeyboard}
+                        onChange={handleMessage}
+                        className={clsx('message-input__input', {
+                            'message-input__input--reply': reply
+                        })}
+                        placeholder="Your message is..."
+                    />
+                    <IconButton className={clsx('message-input__emoji', {
+                        'message-input__emoji--open': emojiPanel
+                    })} onClick={() => { dispatch(toggleEmojiPanel()) }}>
+                        <BsEmojiSmile />
+                    </IconButton>
+                </div>
                 <IconButton
                     onClick={sendMessage}
                     disabled={message.length === 0}
@@ -65,6 +81,7 @@ export const MessageInput = () => {
                     <MdSend />
                 </IconButton>
             </div>
+            {(isMobile && emojiPanel) && <EmojiPanel />}
         </div>
     )
 }

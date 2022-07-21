@@ -41,6 +41,7 @@ export const ChatPanel = () => {
                 {!inView && <ScrollDown onClick={scrollDown} />}
             </div>
             <MessageInput />
+
         </div>
     )
 }

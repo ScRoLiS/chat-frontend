@@ -1,0 +1,34 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+.emoji-panel {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    flex-shrink: 0.5;
+    width: 300px;
+    margin: 10px 10px 10px 0;
+    border-radius: 5px;
+
+    @include inner-shadow;
+
+    &__list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(25px, 1fr));
+        gap: 10px;
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: $user-list;
+    }
+
+    @media screen and (max-width: $mobile) {
+        width: 100%;
+        margin-top: 0;
+        max-height: 200px;
+
+        &__list {
+            border-radius: 0px 0px 5px 5px;
+        }
+    }
+}
