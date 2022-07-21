@@ -10,10 +10,10 @@ import { SocketContext } from '../../contexts/socket-context'
 import { createMessage } from '../../utils/message-creators'
 import { clearMessage, deleteReply, selectMessage, selectReply, updateMessage } from '../../store/slices/message-input-slice'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
-import clsx from 'clsx'
-import './MessageInput.scss'
 import { useMobile } from '../../hooks'
 import { EmojiPanel } from '../EmojiPanel/EmojiPanel'
+import clsx from 'clsx'
+import './MessageInput.scss'
 
 export const MessageInput = () => {
     const dispatch = useAppDispatch()
@@ -23,6 +23,7 @@ export const MessageInput = () => {
     const reply = useAppSelector(selectReply)
     const message = useAppSelector(selectMessage)
     const socket = React.useContext(SocketContext)
+    const emojiComponent = React.useMemo(() => <EmojiPanel />, [])
 
     const handleMessage = (e: FormEvent<HTMLInputElement>) => {
         dispatch(updateMessage(e.currentTarget.value.substring(0, 1000).trimStart()))
@@ -43,10 +44,6 @@ export const MessageInput = () => {
         socket.emit(Event.USER_MESSAGE, msg)
         dispatch(clearMessage())
         dispatch(deleteReply())
-    }
-
-    const handleEmojiClick = () => {
-
     }
 
     return (
@@ -81,7 +78,7 @@ export const MessageInput = () => {
                     <MdSend />
                 </IconButton>
             </div>
-            {(isMobile && emojiPanel) && <EmojiPanel />}
+            {(isMobile && emojiPanel) && emojiComponent}
         </div>
     )
 }

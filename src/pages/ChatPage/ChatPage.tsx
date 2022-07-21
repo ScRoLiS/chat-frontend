@@ -10,12 +10,13 @@ import './ChatPage.scss'
 export const ChatPage = () => {
     const isMobile = useMobile()
     const emojiPanel = useAppSelector(selectEmojiPanel)
+    const emojiComponent = React.useMemo(() => <EmojiPanel />, [])
 
     return (
         <div className="page chat-page">
             <SidePanel />
             <ChatPanel />
-            {(emojiPanel && !isMobile) && <EmojiPanel />}
+            {(emojiPanel && !isMobile) && emojiComponent}
         </div>
     )
 }

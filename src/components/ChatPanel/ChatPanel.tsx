@@ -2,10 +2,10 @@ import React from 'react'
 import { MessageInput } from '../MessageInput/MessageInput'
 import { useAppSelector } from '../../store/hooks'
 import { selectMessages } from '../../store/slices/messages-slice'
-import './ChatPanel.scss'
 import { MessageItem } from '../MessageItem/MessageItem'
 import { useInView } from 'react-intersection-observer'
 import { ScrollDown } from '../ScrollDown/ScrollDown'
+import './ChatPanel.scss'
 
 export const ChatPanel = () => {
     const messages = useAppSelector(selectMessages)
@@ -41,7 +41,6 @@ export const ChatPanel = () => {
                 {!inView && <ScrollDown onClick={scrollDown} />}
             </div>
             <MessageInput />
-
         </div>
     )
 }
